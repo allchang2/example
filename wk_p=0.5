@@ -1,0 +1,39 @@
+#include <iostream>
+#include <fstream>
+#include <cmath> 
+using namespace std;
+
+float factorial(int n) {
+   if (n == 0 || n == 1)
+      return 1;
+   else
+      return n * factorial(n - 1);
+}
+
+int main() {
+   float p = 0.5;
+   int n = 20;
+   int N = 100000;
+   float* biex = new float[n];
+
+   for (int k = 0; k <= n; k++)
+      biex[k] = 0;
+
+   for (int nn = 0; nn < N; nn++) {
+      int count = 0;
+      for (int j = 0; j < n; j++)
+         if ((float)rand() / RAND_MAX < p)
+            count++;
+      biex[count]++;
+   }
+
+   for (int k = 0; k <= n; k++)
+      biex[k] /= (float)N;
+
+   ofstream result_file("coin_flip_results.txt");
+   for (int k = 0; k <= n; k++) {
+      result_file << k << " " << biex[k] << endl;
+   }
+
+   return 3;
+}
