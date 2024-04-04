@@ -1,0 +1,33 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    int N = 2, M = 3, P = 2; 
+    float A[] = { 1, 2, 3, 4, 5, 6 }; // 행렬 A
+    float B[] = { 7, 8, 9, 10, 11, 12 }; // 행렬 B
+    float *C = new float[N*P]; // 결과 행렬 C
+
+
+
+    // 행렬 곱셈 
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < P; ++j) {
+            C[i * P + j] = 0;
+            for (int k = 0; k < M; ++k) {
+                C[i * P + j] += A[i * M + k] * B[k * P + j];
+            }
+        }
+    }
+
+    // 결과 
+    cout << " C" << endl;
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < P; ++j) {
+            cout << C[i * P + j] << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+} 
