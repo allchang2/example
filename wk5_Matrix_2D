@@ -1,0 +1,36 @@
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    int N = 2, M = 3, P = 2;
+    float A[][3] = { {1, 2, 3}, {4, 5, 6} }; // 행렬 A
+    float B[][2] = { {7, 8}, {9, 10}, {11, 12} }; // 행렬 B
+    float** C = new float* [N]; // 결과 행렬 C
+    for (int i = 0; i < N; i++) C[i] = new float[P];
+
+    // 행렬 곱셈 
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < P; ++j) {
+            C[i][j] = 0;
+            for (int k = 0; k < M; ++k) {
+                C[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+
+    // 결과 
+    cout << "Resultant Matrix C:" << endl;
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < P; ++j) {
+            cout << C[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    // 동적 할당 해제
+    for (int i = 0; i < N; i++) delete[] C[i];
+    delete[] C;
+
+    return 0;
+}
