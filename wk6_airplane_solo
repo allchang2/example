@@ -1,0 +1,95 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+float getfrequency(const string& note) {
+    float f;
+    if (note == "A1") f = 220;
+    else if (note == "B1") f = 246.94;
+    else if (note == "C") f = 261.63;
+    else if (note == "D") f = 293.66;
+    else if (note == "E") f = 329.63;
+    else if (note == "F") f = 349.23;
+    else if (note == "G") f = 392.00;
+    else if (note == "A") f = 440.00;
+    else if (note == "B") f = 493.88;
+    else if (note == "Db") f = 277.18;
+    else if (note == "Eb") f = 311.13;
+    else if (note == "Ab") f = 415.30;
+    else if (note == "Bb") f = 466.16;
+    else if (note == "A1b") f = 207.65;
+    else if (note == "B1b") f = 233.08;
+    else return -1;
+    return f;
+}
+int getAmplitude(int strength) {
+    float a;
+    if (strength == 1) a = 1000;
+    else if (strength == 2) a = 2000;
+    else if (strength == 3) a = 3000;
+    else if (strength == 4) a = 4000;
+    else if (strength == 5) a = 5000;
+    else if (strength == 6) a = 6000;
+    else if (strength == 7) a = 7000;
+    else if (strength == 8) a = 8000;
+    else if (strength == 9) a = 9000;
+    else if (strength == 10) a = 10000;
+    else return -1;
+    return a;
+}
+float getLength(int eumpyo) {
+    float T;
+    if (eumpyo == 2) T = 2.0;
+    else if (eumpyo == 4) T = 1.0;
+    else if (eumpyo == 4.5) T = 1.5;
+    else if (eumpyo == 8) T = 0.5;
+    else if (eumpyo == 16) T = 0.25;
+    else return -1;
+    return T;
+}
+
+int main() {
+    char header[44];
+    ifstream yyy;
+    yyy.open("Beatles-LetItBe-wav_30s.wav", ios::binary | ios::in);
+    if (!yyy) return 666;
+    yyy.read(header, sizeof(header));
+    yyy.close();
+    
+    short* n; n = (short*)(header + 22); cout << "number of channel = " << *n << endl; // number of channels
+    int* fs; fs = (int*)(header + 24); cout << "samplerate = " << *fs << endl; // sample rate
+    int* b; b = (int*)(header + 28); cout << "byterate = " << *b << endl; //byte rate
+    // [Sprint1_read header 44bytes]
+
+    int N = fs[0] * 10; //number of samples for 10sec
+    short* data;
+    data = new short[N]; //memory allocation
+    *n = 1; //mono
+    // [Sprint2_Use Beatles.wav]
+
+    const float pi = 3.141592;
+    float dt = 1./ fs[0];
+    ofstream xx("airplane_solo.wav", ios::binary | ios::out);
+    if (!xx) return 777; 
+    xx.write(header, 44); //use header
+    ifstream zz("airplnae.txt"); // read note_airplane
+    float t = 0;
+    float f, a, T, tt, ss; //set variable
+    string hh;
+    int k;
+    zz >> k;
+    for (int i = 0; i < k; i++) {
+        zz >> tt >> hh >> ss;
+        f = getfrequency(hh);
+        a = getAmplitude(ss);
+        T = getLength(tt);
+        for (int j = 0; j < fs[0]; j++, t += dt) {
+            data[j] = (short)(a * sin(2.0 * pi * f * t));
+        }
+        xx.write((char*)data, fs[0] * sizeof(short));//write for 1 sec
+    }
+    xx.close();
+    return 1;
+
+
+}
