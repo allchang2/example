@@ -41,7 +41,6 @@ float getLength(int eumpyo) {
     float T;
     if (eumpyo == 2) T = 2.0;
     else if (eumpyo == 4) T = 1.0;
-    else if (eumpyo == 4.5) T = 1.5;
     else if (eumpyo == 8) T = 0.5;
     else if (eumpyo == 16) T = 0.25;
     else return -1;
@@ -49,32 +48,30 @@ float getLength(int eumpyo) {
 }
 
 int main() {
+    ifstream xx("Beatles-LetItBe-wav_30s.wav", ios::binary | ios::in);
+    if (!xx) return 999;  
     char header[44];
-    ifstream yyy;
-    yyy.open("Beatles-LetItBe-wav_30s.wav", ios::binary | ios::in);
-    if (!yyy) return 666;
-    yyy.read(header, sizeof(header));
-    yyy.close();
-    
-    short* n; n = (short*)(header + 22); cout << "number of channel = " << *n << endl; // number of channels
-    int* fs; fs = (int*)(header + 24); cout << "samplerate = " << *fs << endl; // sample rate
-    int* b; b = (int*)(header + 28); cout << "byterate = " << *b << endl; //byte rate
-    // [Sprint1_read header 44bytes]
+    xx.read(header, 44);
+    xx.close();
+    //[sprint1]_read header 44 byte
 
-    int N = fs[0] * 10; //number of samples for 10sec
+    short* n;   n = (short*)(header + 22);  cout << "number of channels = " << *n << endl; // number of Channels
+    int* fs;   fs = (int*)(header + 24);  cout << "sampleRate = " << *fs << endl; // sampleRate
+    int* b;   b = (int*)(header + 28);  cout << "byteRate = " << *b << endl;  //  byteRate   
+    *n = 2;  // stereo
+    int N = fs[0] * 10; // number of samples for 10 sec
     short* data;
-    data = new short[N]; //memory allocation
-    *n = 1; //mono
-    // [Sprint2_Use Beatles.wav]
+    data = new short[N]; // allocate memory 
+    //[sprint2]_use Beatles.wav
 
     const float pi = 3.141592;
-    float dt = 1./ fs[0];
-    ofstream xx("airplane_solo.wav", ios::binary | ios::out);
-    if (!xx) return 777; 
-    xx.write(header, 44); //use header
-    ifstream zz("airplnae.txt"); // read note_airplane
+    float dt = 1. / fs[0];
+    ofstream yy("airplane_solo.wav", ios::binary | ios::out);
+    if (!yy) return 666;  
+    yy.write(header, 100 * sizeof(char)); // use header of Beatles.wav
+    ifstream zz("note_airplane.txt");
     float t = 0;
-    float f, a, T, tt, ss; //set variable
+    int f, a, T, tt, ss; // set variables
     string hh;
     int k;
     zz >> k;
@@ -84,12 +81,10 @@ int main() {
         a = getAmplitude(ss);
         T = getLength(tt);
         for (int j = 0; j < fs[0]; j++, t += dt) {
-            data[j] = (short)(a * sin(2.0 * pi * f * t));
+            data[j] = (short)(a * sin(2.0 * pi * f * t));   // a=amplitude, f=freq, N=number of Samples
         }
-        xx.write((char*)data, fs[0] * sizeof(short));//write for 1 sec
+        yy.write((char*)data, fs[0] * sizeof(short));    // write 1 sec
     }
-    xx.close();
+    yy.close();
     return 1;
-
-
 }
