@@ -1,0 +1,32 @@
+class ob{
+  //constructor
+  ob(int i) {
+    x = random(100,width-100);
+    y = random(height);
+    d = 10 + 0.5 * i;
+    vy = random(2,4);
+    k=60;
+  }
+  ob(int i, int j) {
+    x = random(100,width-100);
+    y = random(height);
+    d = 10 + 0.5 * i;
+    vy = 1.5 + 0.4 * j;
+    k=60;
+  }
+  //member data
+  float x, y, d, vy, k;
+  //member function
+  void show(){
+    fill(255,255,255);
+    circle(x,y,d*3);
+    circle(x,y+d*3,d*4);
+    circle(x-3*d/4,y-d/2,d*16/15);
+    circle(x+3*d/4,y-d/2,d*16/15);
+  }
+  
+  void update() {
+    y += vy;
+    if (y > height || y < 0) vy = -vy;
+  }
+}
