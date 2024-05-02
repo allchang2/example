@@ -1,0 +1,50 @@
+class dog {
+  //constructor
+  dog() {
+     x=40;  y=300;  d=5;  //Character's size
+  }
+  
+  //member data
+  float x, y, d;
+  //member function
+  void show(){
+    fill(255,180,100);  //ears
+    ellipse(x-6*d,y-6*d,4*d,8*d);  
+    ellipse(x+6*d,y-6*d,4*d,8*d);
+    fill(255);
+    ellipse(x-6*d,y-6*d,2*d,4*d);
+    ellipse(x+6*d,y-6*d,2*d,4*d);  //~~
+    fill(255,180,100);  //head
+    circle(x,y,16*d);  //~~
+    fill(0);  //eyes
+    circle(x-3*d,y-d,2*d);  
+    circle(x+3*d,y-d,2*d);
+    fill(255);
+    circle(x-3*d,y-d,d);  
+    circle(x+3*d,y-d,d);  //~~
+    ellipse(x,y+2*d,8*d,4*d);  //mouth
+    arc(x,y+2*d,4*d,2*d,0,PI);  //~~
+    fill(0);  //nose
+    circle(x,y+d,2*d);  //~~
+    
+    if(x <40) x=40;
+    else if(x>width-40) x=width-40;
+    else if(y <40) y=40;
+    else if(y>height-40) y=height-40;
+  }
+  
+  void keyMove() {
+    if (key == 'd') x += 10;
+    else if (key == 'w') y -= 10;
+    else if (key == 's') y += 10;
+    else if (key == 'a') x -= 10;
+  }
+  
+  int collide(ob m) {
+    float dx = x - m.x;
+    float dy = y - m.y;
+    float s = sqrt(dx*dx + dy*dy);
+    if (s < m.k) return 30;
+    else return 0;
+  }
+}
