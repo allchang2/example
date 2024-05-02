@@ -1,0 +1,30 @@
+int keepText1, keepText2 = 0;
+dog dd;
+ob [] oo;
+void setup(){
+  size(800, 600);
+  dd = new dog();
+  oo = new ob[5];
+  for(int i=0; i<4;i++){
+    oo[i] = new ob(i);
+  }
+  oo[4] = new ob(5,3);
+}
+void draw(){
+  background(200);
+  if(keepText1 > 0) dieText();
+  else if(keepText2 > 0) goalText();
+  else testGoal(dd.x);
+  
+ dd.show();
+ 
+ for(int i = 0; i < 5; i++){
+    oo[i].show();
+    oo[i].update();
+    if(keepText1 == 0) keepText1 = dd.collide(oo[i]);   
+  }
+
+}
+void keyPressed(){
+ dd.keyMove(); 
+}
