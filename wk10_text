@@ -1,0 +1,18 @@
+void testGoal(float x){ 
+    line(750,0,750,600);  //goal line
+    if(x > 750) 
+      keepText2 = 60;
+}
+void dieText(){
+  keepText1--;
+  fill(255,0,0);
+  textSize(100);
+  text("Die",300,300);
+  dd.x=40;  dd.y=300;
+}
+void goalText(){
+  keepText2--;
+  fill(255,255,0);
+  textSize(100);
+  text("Goal",300,300);
+}
