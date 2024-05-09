@@ -1,0 +1,19 @@
+class ob1 extends ob{
+  //constructor
+  ob1(int i) {
+    super(i);
+  }
+  ob1(int i, int j) {
+    super(i, j);
+  }
+  //member data
+  float k;
+  //member function
+  void show(){
+    fill(255,255,255);
+    circle(x,y,d*3);
+    circle(x,y+d*3,d*4);
+    circle(x-3*d/4,y-d/2,d*16/15);
+    circle(x+3*d/4,y-d/2,d*16/15);
+  }
+}
