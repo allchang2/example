@@ -1,0 +1,25 @@
+class ob{
+  //constructor
+  ob(int i) {
+    x = random(100, 700);
+    y = 100 + 100 * i;
+    d = 10 + 0.5 * i;
+    vy = 2 + 0.5 * i;
+    k = 60;
+  }
+  ob(int i, int j) {
+    x = random(100, 700);
+    y = 100 + 100 * i;
+    d = 10 + 0.5 * i;
+    vy = 2 + 0.5 * j;
+    k = 60;
+  }
+  //member data
+  float x, y, d, vy,k;
+  //member function
+  void update() {
+    y += vy;
+    if (y > height || y < 0) vy = -vy;
+  }
+  void show(){};
+}
