@@ -15,4 +15,5 @@ void goalText(){
   fill(255,255,0);
   textSize(100);
   text("Goal",300,300);
+  if(keepText2<1)  exit();
 }
